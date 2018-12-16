@@ -5,6 +5,8 @@ import { Header } from './components/common';
 import LoginForm from './components/LoginForm';
 
 class App extends Component {
+  state = { loggedIn: false };
+
   componentWillMount() {
     const firebaseConfig = {
       apiKey: 'AIzaSyB0sn7mgf1LzFumYjiZ0CcdkJYX_elGeg4',
@@ -16,6 +18,14 @@ class App extends Component {
     };
 
     firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onStateChanged((user) => {
+      if (user) {
+        this.setState({ loggedIn: true });
+      } else {
+        this.setState({ loggedIn: false });
+      }
+    });
   }
   render() {
     return (

@@ -5,7 +5,7 @@ import { Header, Button, Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
 
 class App extends Component {
-  state = { loggedIn: false };
+  state = { loggedIn: null };
 
   componentWillMount() {
     const firebaseConfig = {
@@ -31,7 +31,11 @@ class App extends Component {
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
-        return <Button>Log Out</Button>
+        return (
+          <Button onPress={() => firebase.auth().signOut()}>
+            Log Out
+          </Button>
+        );
       case false:
         return <LoginForm />;
       default:
@@ -42,7 +46,7 @@ class App extends Component {
   render() {
     return (
       <View>
-        <Header headerText={'Authentication'} />
+        <Header headerText='Authentication' />
         {this.renderContent()}
       </View>
     );
